@@ -1,8 +1,8 @@
 package imx
 
 import (
-	"net/url"
-	"strings"
+	"github.com/google/go-querystring/query"
+	"github.com/vanclief/ez"
 )
 
 type Collection struct {
@@ -27,8 +27,20 @@ type Asset struct {
 }
 
 type ListAssetsRequest struct {
-	User         string `json:"user"`
-	TokenAddress string `json:"token_address"`
+	PageSize            int    `url:"page_size,omitempty"`
+	Cursor              string `url:"cursor,omitempty"`
+	OrderBy             string `url:"order_by,omitempty"`
+	Direction           string `url:"direction,omitempty"`
+	User                string `url:"user,omitempty"`
+	Status              string `url:"status,omitempty"`
+	Name                string `url:"name,omitempty"`
+	Metadata            string `url:"metadata,omitempty"`
+	SellOrders          bool   `url:"sell_orders,omitempty"`
+	BuyOrders           bool   `url:"buy_orders,omitempty"`
+	IncludeFees         bool   `url:"include_fees,omitempty"`
+	Collection          string `url:"collection,omitempty"`
+	UpdatedMinTimestamp string `url:"updated_min_timestamp,omitempty"`
+	UpdatedMaxTimestamp string `url:"updated_max_timestamp,omitempty"`
 }
 
 type ListAssetsResponse struct {
@@ -36,17 +48,18 @@ type ListAssetsResponse struct {
 }
 
 func (c *Client) ListAssets(request *ListAssetsRequest) (*ListAssetsResponse, error) {
+	const op = "Client.ListAssets"
 
 	response := &ListAssetsResponse{}
 
-	data := url.Values{
-		"user":       {strings.ToLower(request.User)},
-		"collection": {strings.ToLower(request.TokenAddress)},
+	data, err := query.Values(request)
+	if err != nil {
+		return nil, ez.Wrap(op, err)
 	}
 
-	err := c.httpRequest("GET", "assets", data, nil, response)
+	err = c.httpRequest("GET", "assets", data, nil, response)
 	if err != nil {
-		return nil, err
+		return nil, ez.Wrap(op, err)
 	}
 
 	return response, nil
