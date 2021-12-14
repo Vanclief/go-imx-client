@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetAssets(t *testing.T) {
+func TestListAssets(t *testing.T) {
 
 	client, err := NewClient("ropsten")
 	assert.Nil(t, err)

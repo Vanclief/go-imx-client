@@ -57,7 +57,9 @@ func (c *Client) ListAssets(request *ListAssetsRequest) (*ListAssetsResponse, er
 		return nil, ez.Wrap(op, err)
 	}
 
-	err = c.httpRequest("GET", "assets", data, nil, response)
+	endpoint := "assets"
+
+	err = c.httpRequest("GET", endpoint, data, nil, response)
 	if err != nil {
 		return nil, ez.Wrap(op, err)
 	}
