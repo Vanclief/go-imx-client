@@ -5,12 +5,25 @@ import (
 	"github.com/vanclief/ez"
 )
 
+type OrderData struct {
+	TokenID      string      `json:"token_id"`
+	ID           string      `json:"id"`
+	TokenAddress string      `json:"token_address"`
+	Quantity     string      `json:"quantity"`
+	Properties   interface{} `json:"properties"`
+}
+
+type OrderDetail struct {
+	Type string    `json:"type"`
+	Data OrderData `json:"data"`
+}
+
 type Order struct {
 	OrderID             int         `json:"order_id"`
 	Status              string      `json:"status"`
 	User                string      `json:"user"`
-	Sell                interface{} `json:"sell"`
-	Buy                 interface{} `json:"buy"`
+	Sell                OrderDetail `json:"sell"`
+	Buy                 OrderDetail `json:"buy"`
 	AmountSold          string      `json:"amount_sold"`
 	ExpirationTimestamp string      `json:"expiration_timestamp"`
 	Timestamp           string      `json:"timestamp"`

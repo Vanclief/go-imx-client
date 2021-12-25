@@ -22,5 +22,6 @@ func TestListOrders(t *testing.T) {
 
 	for _, order := range response.Result {
 		assert.NotNil(t, order.OrderID)
+		assert.NotNil(t, order.Sell.Data.TokenID)
 	}
 }
