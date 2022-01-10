@@ -1,6 +1,8 @@
 package imx
 
 import (
+	"fmt"
+
 	"github.com/google/go-querystring/query"
 	"github.com/vanclief/ez"
 )
@@ -65,4 +67,25 @@ func (c *Client) ListAssets(request *ListAssetsRequest) (*ListAssetsResponse, er
 	}
 
 	return response, nil
+}
+
+type GetAssetRequest struct {
+	TokenAddress string
+	TokenID      string
+}
+
+func (c *Client) GetAsset(request *GetAssetRequest) (*Asset, error) {
+	const op = "Client.GetAssets"
+
+	response := &Asset{}
+
+	endpoint := fmt.Sprintf("assets/%s/%s", request.TokenAddress, request.TokenID)
+
+	err := c.httpRequest("GET", endpoint, nil, nil, response)
+	if err != nil {
+		return nil, ez.Wrap(op, err)
+	}
+
+	return response, nil
+
 }

@@ -25,3 +25,18 @@ func TestListAssets(t *testing.T) {
 		assert.NotNil(t, asset.ID)
 	}
 }
+
+func TestGetAsset(t *testing.T) {
+
+	client, err := NewClient("ropsten")
+	assert.Nil(t, err)
+
+	request := &GetAssetRequest{
+		TokenAddress: "0x3d25036695dafab7eee3465ff146f6d6c6d0045b",
+		TokenID:      "1471",
+	}
+
+	response, err := client.GetAsset(request)
+	assert.Nil(t, err)
+	assert.NotNil(t, response)
+}
