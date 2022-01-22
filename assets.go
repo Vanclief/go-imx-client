@@ -46,7 +46,9 @@ type ListAssetsRequest struct {
 }
 
 type ListAssetsResponse struct {
-	Result []Asset `json:"result"`
+	Cursor    string  `json:"cursor"`
+	Remaining int     `json:"remaining"`
+	Result    []Asset `json:"result"`
 }
 
 func (c *Client) ListAssets(request *ListAssetsRequest) (*ListAssetsResponse, error) {

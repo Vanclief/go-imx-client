@@ -59,7 +59,9 @@ type ListOrdersRequest struct {
 }
 
 type ListOrdersResponse struct {
-	Result []Order `json:"result"`
+	Cursor    string  `json:"cursor"`
+	Remaining int     `json:"remaining"`
+	Result    []Order `json:"result"`
 }
 
 func (c *Client) ListOrders(request *ListOrdersRequest) (*ListOrdersResponse, error) {

@@ -19,6 +19,10 @@ func TestListOrders(t *testing.T) {
 	response, err := client.ListOrders(request)
 	assert.Nil(t, err)
 	assert.NotNil(t, response)
+	assert.NotNil(t, response.Cursor)
+	assert.NotNil(t, response.Remaining)
+	assert.NotEmpty(t, response.Cursor, "")
+	assert.Equal(t, response.Remaining, 1)
 
 	for _, order := range response.Result {
 		assert.NotNil(t, order.OrderID)
