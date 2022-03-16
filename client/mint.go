@@ -1,4 +1,4 @@
-package imx
+package client
 
 import (
 	"github.com/vanclief/ez"
@@ -32,11 +32,9 @@ type MintResponse struct {
 func (c *Client) Mint(request *MintRequest) (*MintResponse, error) {
 	const op = "imx.Client.Mint"
 
-	URL := "mints"
-
 	response := &MintResponse{}
 
-	err := c.httpRequest("POST", URL, nil, request, response)
+	err := c.httpRequest("POST", MintsURL, nil, request, response)
 	if err != nil {
 		return nil, ez.Wrap(op, err)
 	}

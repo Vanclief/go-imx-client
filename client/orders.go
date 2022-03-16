@@ -1,4 +1,4 @@
-package imx
+package client
 
 import (
 	"github.com/google/go-querystring/query"
@@ -74,9 +74,7 @@ func (c *Client) ListOrders(request *ListOrdersRequest) (*ListOrdersResponse, er
 		return nil, ez.Wrap(op, err)
 	}
 
-	endpoint := "orders"
-
-	err = c.httpRequest("GET", endpoint, data, nil, response)
+	err = c.httpRequest("GET", OrdersURL, data, nil, response)
 	if err != nil {
 		return nil, ez.Wrap(op, err)
 	}

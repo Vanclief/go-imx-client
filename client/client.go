@@ -1,4 +1,4 @@
-package imx
+package client
 
 import (
 	"net/http"
@@ -24,10 +24,10 @@ func NewClient(network Network) (*Client, error) {
 
 	switch network {
 	case Mainnet:
-		baseURL = "https://api.x.immutable.com/v1/"
+		baseURL = MainnetURL
 
 	case Ropsten:
-		baseURL = "https://api.ropsten.x.immutable.com/v1/"
+		baseURL = RopstenURL
 
 	default:
 		return nil, ez.New(op, ez.EINVALID, "Network not supported", nil)

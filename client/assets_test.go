@@ -1,4 +1,4 @@
-package imx
+package client
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 
 func TestListAssets(t *testing.T) {
 
-	client, err := NewClient("ropsten")
+	client, err := NewClient(Ropsten)
 	assert.Nil(t, err)
 
 	request := &ListAssetsRequest{

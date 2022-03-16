@@ -1,4 +1,4 @@
-package imx
+package client
 
 import (
 	"crypto/ecdsa"

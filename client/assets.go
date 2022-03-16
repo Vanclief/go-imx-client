@@ -1,4 +1,4 @@
-package imx
+package client
 
 import (
 	"fmt"
@@ -61,9 +61,7 @@ func (c *Client) ListAssets(request *ListAssetsRequest) (*ListAssetsResponse, er
 		return nil, ez.Wrap(op, err)
 	}
 
-	endpoint := "assets"
-
-	err = c.httpRequest("GET", endpoint, data, nil, response)
+	err = c.httpRequest("GET", AssetsURL, data, nil, response)
 	if err != nil {
 		return nil, ez.Wrap(op, err)
 	}
@@ -81,7 +79,7 @@ func (c *Client) GetAsset(request *GetAssetRequest) (*Asset, error) {
 
 	response := &Asset{}
 
-	endpoint := fmt.Sprintf("assets/%s/%s", request.TokenAddress, request.TokenID)
+	endpoint := fmt.Sprintf("%s/%s/%s", AssetsURL, request.TokenAddress, request.TokenID)
 
 	err := c.httpRequest("GET", endpoint, nil, nil, response)
 	if err != nil {
