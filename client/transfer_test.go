@@ -2,7 +2,23 @@ package client
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
+
+func TestGetTransfer(t *testing.T) {
+
+	client, err := NewClient(Ropsten, "", "")
+	assert.Nil(t, err)
+
+	request := GetTransferRequest{
+		TransferID: "3490228",
+	}
+
+	response, err := client.GetTransfer(request)
+	assert.Nil(t, err)
+	assert.NotNil(t, response)
+}
 
 func TestTransferERC20(t *testing.T) {
 
