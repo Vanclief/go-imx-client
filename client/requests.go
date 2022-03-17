@@ -58,7 +58,7 @@ func (c *Client) httpRequest(method, URL string, data url.Values, body, response
 		}
 	}
 
-	request, err := http.NewRequest(method, URL, bytes.NewBuffer(jsonBody))
+	request, err := http.NewRequest(method, URL+"?"+data.Encode(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return ez.Wrap(op, err)
 	}

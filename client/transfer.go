@@ -36,6 +36,7 @@ type TransferERC721Request struct {
 }
 
 type TransferERC721Response struct {
+	TransferIDs []int `json:"transfer_ids"`
 }
 
 func (c *Client) TransferERC721(request *TransferERC721Request) (response TransferERC721Response, err error) {
@@ -43,7 +44,7 @@ func (c *Client) TransferERC721(request *TransferERC721Request) (response Transf
 
 	request.Type = "ERC721"
 
-	err = c.SDKRequest("POST", SDKTransferERC721URL, nil, request, response)
+	err = c.SDKRequest("POST", SDKTransferERC721URL, nil, request, &response)
 	if err != nil {
 		return response, ez.Wrap(op, err)
 	}

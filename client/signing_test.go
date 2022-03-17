@@ -2,7 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"testing"
 
@@ -33,9 +32,7 @@ func TestSign(t *testing.T) {
 
 	// Signature
 	b, err := json.Marshal(mint)
-	if err != nil {
-		fmt.Println(err)
-	}
+	assert.Nil(t, err)
 
 	// Throwaway PK, don't waste your time checking if it has funds
 	hexPrivateKey := "38b7ca1ab75167a94477ce6682fc687a36ce9cdff3e6a6d582177c0c3b407d2e"
