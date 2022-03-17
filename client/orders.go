@@ -74,7 +74,7 @@ func (c *Client) ListOrders(request *ListOrdersRequest) (*ListOrdersResponse, er
 		return nil, ez.Wrap(op, err)
 	}
 
-	err = c.httpRequest("GET", OrdersURL, data, nil, response)
+	err = c.RestRequest("GET", OrdersURL, data, nil, response)
 	if err != nil {
 		return nil, ez.Wrap(op, err)
 	}

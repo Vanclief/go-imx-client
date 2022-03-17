@@ -18,3 +18,7 @@ const WithdrawalsURL = "/v1/withdrawals"
 const SnapshotURL = "/v1/snapshot/balances"
 const TokensURL = "/v1/tokens"
 const TradesURL = "/v1/trades"
+
+const SDKInitURL = "init"
+const SDKTransferERC20URL = "erc20/transfer"
+const SDKTransferERC721URL = "erc721/transfer"

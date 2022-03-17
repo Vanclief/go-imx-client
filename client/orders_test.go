@@ -8,7 +8,7 @@ import (
 
 func TestListOrders(t *testing.T) {
 
-	client, err := NewClient("mainnet")
+	client, err := NewClient(Ropsten, "", "")
 	assert.Nil(t, err)
 
 	request := &ListOrdersRequest{

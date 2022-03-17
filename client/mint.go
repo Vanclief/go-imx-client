@@ -34,7 +34,7 @@ func (c *Client) Mint(request *MintRequest) (*MintResponse, error) {
 
 	response := &MintResponse{}
 
-	err := c.httpRequest("POST", MintsURL, nil, request, response)
+	err := c.RestRequest("POST", MintsURL, nil, request, response)
 	if err != nil {
 		return nil, ez.Wrap(op, err)
 	}

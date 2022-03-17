@@ -9,7 +9,7 @@ import (
 
 func TestMint(t *testing.T) {
 
-	client, err := NewClient("ropsten")
+	client, err := NewClient(Ropsten, "", "")
 	assert.NotNil(t, client)
 	assert.Nil(t, err)
 

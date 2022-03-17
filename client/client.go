@@ -7,9 +7,14 @@ import (
 )
 
 type Client struct {
-	http    *http.Client
-	BaseURL string
+	http             *http.Client
+	network          Network
+	privateKey       string
+	providerKey      string
+	sdkEnabled       bool
+	sdkServiceParams SDKServiceParams
 }
+
 type Network string
 
 var (
@@ -17,26 +22,81 @@ var (
 	Ropsten Network = "ropsten"
 )
 
-func NewClient(network Network) (*Client, error) {
+func NewClient(network Network, privateKey, providerKey string, opts ...Option) (*Client, error) {
 	const op = "imx.NewClient"
 
-	var baseURL string
+	sdkServiceParams := SDKServiceParams{
+		Host: "http://localhost",
+		Port: 4000,
+	}
 
-	switch network {
-	case Mainnet:
-		baseURL = MainnetURL
-
-	case Ropsten:
-		baseURL = RopstenURL
-
-	default:
+	if network != Mainnet && network != Ropsten {
 		return nil, ez.New(op, ez.EINVALID, "Network not supported", nil)
 	}
 
-	client := &Client{
-		http:    &http.Client{},
-		BaseURL: baseURL,
+	c := &Client{
+		http:             &http.Client{},
+		network:          network,
+		privateKey:       privateKey,
+		providerKey:      providerKey,
+		sdkServiceParams: sdkServiceParams,
 	}
 
-	return client, nil
+	for _, opt := range opts {
+		if err := opt.applyOption(c); err != nil {
+			return nil, ez.Wrap(op, err)
+		}
+	}
+
+	return c, nil
+}
+
+func (c *Client) getBaseURL() string {
+	if c.network == Mainnet {
+		return MainnetURL
+	}
+
+	return RopstenURL
+}
+
+type SDKServiceParams struct {
+	Host string
+	Port int
+}
+
+type InitSDKRequest struct {
+	Network    Network `json:"network"`
+	PrivateKey string  `json:"private_key"`
+	AlchemyKey string  `json:"alchemy_key"`
+}
+
+type InitSDKResponse struct {
+	PublicApiUrl                string `json:"publicApiUrl"`
+	ContractAddress             string `json:"contractAddress"`
+	RegistrationContractAddress string `json:"registrationContractAddress"`
+}
+
+func (c *Client) initSDKClient() error {
+	const op = "Client.initSDKClient"
+
+	if c.sdkEnabled {
+		return nil
+	}
+
+	request := InitSDKRequest{
+		Network:    c.network,
+		PrivateKey: "2772b0cdf316c9874a4e36873b08f46b05789f294286b2f9e13726612352c022",
+		AlchemyKey: "DvukuyBzEK-JyP6zp1NVeNVYLJCrzjp_",
+	}
+
+	var response InitSDKResponse
+
+	err := c.SDKRequest("POST", SDKInitURL, nil, request, &response)
+	if err != nil {
+		return ez.Wrap(op, err)
+	}
+
+	c.sdkEnabled = true
+
+	return nil
 }

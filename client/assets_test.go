@@ -8,7 +8,7 @@ import (
 
 func TestListAssets(t *testing.T) {
 
-	client, err := NewClient(Ropsten)
+	client, err := NewClient(Ropsten, "", "")
 	assert.Nil(t, err)
 
 	request := &ListAssetsRequest{
@@ -28,7 +28,7 @@ func TestListAssets(t *testing.T) {
 
 func TestGetAsset(t *testing.T) {
 
-	client, err := NewClient("ropsten")
+	client, err := NewClient(Ropsten, "", "")
 	assert.Nil(t, err)
 
 	request := &GetAssetRequest{

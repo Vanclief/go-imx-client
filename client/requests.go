@@ -3,6 +3,7 @@ package client
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -19,8 +20,30 @@ type IMXError struct {
 	Message string `json:"message"`
 }
 
-func (c *Client) httpRequest(method, path string, data url.Values, body, responseType interface{}) error {
-	op := "imx.Client.httpRequest"
+func (c *Client) RestRequest(method, path string, data url.Values, body, responseType interface{}) error {
+	URL := c.getBaseURL() + path
+
+	return c.httpRequest(method, URL, data, body, responseType)
+}
+
+func (c *Client) SDKRequest(method, path string, data url.Values, body, responseType interface{}) error {
+
+	if path != SDKInitURL {
+		c.initSDKClient()
+	}
+
+	URL := fmt.Sprintf("%s:%d/%s",
+		c.sdkServiceParams.Host,
+		c.sdkServiceParams.Port,
+		path,
+	)
+
+	return c.httpRequest(method, URL, data, body, responseType)
+}
+
+func (c *Client) httpRequest(method, URL string, data url.Values, body, responseType interface{}) error {
+	op := "Client.httpRequest"
+
 	if data == nil {
 		data = url.Values{}
 	}
@@ -35,14 +58,11 @@ func (c *Client) httpRequest(method, path string, data url.Values, body, respons
 		}
 	}
 
-	URL := c.BaseURL + path
-
-	request, err := http.NewRequest(method, URL+"?"+data.Encode(), bytes.NewBuffer(jsonBody))
+	request, err := http.NewRequest(method, URL, bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return ez.Wrap(op, err)
 	}
 
-	// request.Header.Add("auth-token", c.Token)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Set("Content-Type", "application/json")
 
