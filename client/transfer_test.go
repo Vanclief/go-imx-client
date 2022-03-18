@@ -6,6 +6,25 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestListTransfer(t *testing.T) {
+
+	client, err := NewClient(Ropsten, "", "")
+	assert.Nil(t, err)
+
+	request := ListTransfersRequest{
+		User: "0xc0324Dca5073Df1aaf26730471718c500d31cA01",
+	}
+
+	response, err := client.ListTransfers(request)
+	assert.Nil(t, err)
+	assert.NotNil(t, response)
+
+	for _, transfer := range response.Result {
+		assert.NotNil(t, transfer.Status)
+		assert.NotNil(t, transfer.Token.Data)
+	}
+}
+
 func TestGetTransfer(t *testing.T) {
 
 	client, err := NewClient(Ropsten, "", "")

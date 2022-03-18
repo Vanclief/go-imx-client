@@ -3,9 +3,50 @@ package client
 import (
 	"fmt"
 
+	"github.com/google/go-querystring/query"
 	"github.com/vanclief/ez"
 	"github.com/vanclief/go-imx-client/types"
 )
+
+type ListTransfersRequest struct {
+	PageSize            int    `url:"page_size,omitempty"`
+	Cursor              string `url:"cursor,omitempty"`
+	OrderBy             string `url:"order_by,omitempty"`
+	Direction           string `url:"direction,omitempty"`
+	User                string `url:"user,omitempty"`
+	Receiver            string `url:"receiver,omitempty"`
+	Status              string `url:"status,omitempty"`
+	Name                string `url:"name,omitempty"`
+	Metadata            string `url:"metadata,omitempty"`
+	SellOrders          bool   `url:"sell_orders,omitempty"`
+	BuyOrders           bool   `url:"buy_orders,omitempty"`
+	IncludeFees         bool   `url:"include_fees,omitempty"`
+	Collection          string `url:"collection,omitempty"`
+	UpdatedMinTimestamp string `url:"updated_min_timestamp,omitempty"`
+	UpdatedMaxTimestamp string `url:"updated_max_timestamp,omitempty"`
+}
+
+type ListTransfersResponse struct {
+	Cursor    string           `json:"cursor"`
+	Remaining int              `json:"remaining"`
+	Result    []types.Transfer `json:"result"`
+}
+
+func (c *Client) ListTransfers(request ListTransfersRequest) (response ListTransfersResponse, err error) {
+	const op = "Client.ListTransfers"
+
+	data, err := query.Values(request)
+	if err != nil {
+		return response, ez.Wrap(op, err)
+	}
+
+	err = c.RestRequest("GET", TransfersURL, data, nil, &response)
+	if err != nil {
+		return response, ez.Wrap(op, err)
+	}
+
+	return response, nil
+}
 
 type GetTransferRequest struct {
 	TransferID string
