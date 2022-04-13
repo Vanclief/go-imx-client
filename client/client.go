@@ -9,8 +9,8 @@ import (
 type Client struct {
 	http             *http.Client
 	network          Network
-	privateKey       string
-	providerKey      string
+	privateKey       string // Wallet private key
+	providerKey      string // Alchemy provider key
 	sdkEnabled       bool
 	sdkServiceParams SDKServiceParams
 }
@@ -85,8 +85,8 @@ func (c *Client) initSDKClient() error {
 
 	request := InitSDKRequest{
 		Network:    c.network,
-		PrivateKey: "2772b0cdf316c9874a4e36873b08f46b05789f294286b2f9e13726612352c022",
-		AlchemyKey: "DvukuyBzEK-JyP6zp1NVeNVYLJCrzjp_",
+		PrivateKey: c.privateKey,
+		AlchemyKey: c.privateKey,
 	}
 
 	var response InitSDKResponse
