@@ -42,20 +42,19 @@ func TestGetTransfer(t *testing.T) {
 func TestTransferERC20(t *testing.T) {
 
 	// Throwaway PK, don't waste your time checking if it has funds
-	// client, err := NewClient(Ropsten, "38b7ca1ab75167a94477ce6682fc687a36ce9cdff3e6a6d582177c0c3b407d2e", "DvukuyBzEK-JyP6zp1NVeNVYLJCrzjp_")
-	// assert.Nil(t, err)
+	client, err := NewClient(Ropsten, "38b7ca1ab75167a94477ce6682fc687a36ce9cdff3e6a6d582177c0c3b407d2e", "DvukuyBzEK-JyP6zp1NVeNVYLJCrzjp_")
+	assert.Nil(t, err)
 
-	// request := &TransferERC20Request{
-	// 	TokenID:      "6805",
-	// 	Symbol:       "FCT",
-	// 	TokenAddress: "0x73f99ca65b1a0aef2d4591b1b543d789860851bf",
-	//  ToAddress:    "0xc0324Dca5073Df1aaf26730471718c500d31cA01",
-	// 	Amount:       "1",
-	// }
+	request := &TransferERC20Request{
+		Symbol:       "FCT",
+		TokenAddress: "0x73f99ca65b1a0aef2d4591b1b543d789860851bf",
+		ToAddress:    "0x5bc3e1D27505973b8cB03039a9E697D01C49047E",
+		Amount:       "1000000000000000000",
+	}
 
-	// response, err := client.TransferERC20(request)
-	// assert.Nil(t, err)
-	// assert.NotNil(t, response)
+	response, err := client.TransferERC20(request)
+	assert.Nil(t, err)
+	assert.NotNil(t, response)
 }
 
 func TestTransferERC721(t *testing.T) {

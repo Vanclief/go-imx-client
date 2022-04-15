@@ -20,4 +20,5 @@ type TokenData struct {
 	TokenAddress string `json:"token_address"`
 	Decimals     int    `json:"decimals"`
 	Quantity     string `json:"quantity"`
+	Symbol       string `json:"symbol"`
 }

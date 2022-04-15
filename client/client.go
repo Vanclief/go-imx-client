@@ -86,7 +86,7 @@ func (c *Client) initSDKClient() error {
 	request := InitSDKRequest{
 		Network:    c.network,
 		PrivateKey: c.privateKey,
-		AlchemyKey: c.privateKey,
+		AlchemyKey: c.providerKey,
 	}
 
 	var response InitSDKResponse
