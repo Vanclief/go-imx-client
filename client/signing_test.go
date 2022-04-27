@@ -18,14 +18,14 @@ func TestSign(t *testing.T) {
 		TokenAddress: "0x3d25036695dafab7eee3465ff146f6d6c6d0045b",
 	}
 
-	token := Token{
+	token := TokenToMint{
 		Type: "ERC721",
 		Data: data,
 	}
 
 	mint := Mint{
 		User:          "0x",
-		Tokens:        []Token{token},
+		Tokens:        []TokenToMint{token},
 		Nonce:         498388787,
 		AuthSignature: "",
 	}
@@ -56,14 +56,14 @@ func TestMintSignature(t *testing.T) {
 		TokenAddress: "0x",
 	}
 
-	token := Token{
+	token := TokenToMint{
 		Type: "ERC721",
 		Data: data,
 	}
 
 	mint := Mint{
 		User:          "0x",
-		Tokens:        []Token{token},
+		Tokens:        []TokenToMint{token},
 		Nonce:         498388787,
 		AuthSignature: "",
 	}

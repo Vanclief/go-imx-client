@@ -12,10 +12,10 @@ import (
 )
 
 type SigMint struct {
-	EtherKey      string  `json:"ether_key"`
-	Tokens        []Token `json:"tokens"`
-	Nonce         int64   `json:"nonce"`
-	AuthSignature string  `json:"auth_signature"`
+	EtherKey      string        `json:"ether_key"`
+	Tokens        []TokenToMint `json:"tokens"`
+	Nonce         int64         `json:"nonce"`
+	AuthSignature string        `json:"auth_signature"`
 }
 
 func MintSignature(mint Mint, privateKey *ecdsa.PrivateKey) (string, error) {

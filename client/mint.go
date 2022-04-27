@@ -9,13 +9,13 @@ type MintRequest struct {
 }
 
 type Mint struct {
-	User          string  `json:"user"`
-	Tokens        []Token `json:"tokens"`
-	Nonce         int64   `json:"nonce"`
-	AuthSignature string  `json:"auth_signature"`
+	User          string        `json:"user"`
+	Tokens        []TokenToMint `json:"tokens"`
+	Nonce         int64         `json:"nonce"`
+	AuthSignature string        `json:"auth_signature"`
 }
 
-type Token struct {
+type TokenToMint struct {
 	Type string    `json:"type"`
 	Data *MintData `json:"data"`
 }

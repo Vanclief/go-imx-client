@@ -20,14 +20,14 @@ func TestMint(t *testing.T) {
 		TokenAddress: "0x",
 	}
 
-	token := Token{
+	token := TokenToMint{
 		Type: "ERC721",
 		Data: data,
 	}
 
 	mint := Mint{
 		User:          "0x1ea42bdf38c50dB0fdF396612fA8C59E09EE023e",
-		Tokens:        []Token{token},
+		Tokens:        []TokenToMint{token},
 		Nonce:         498388787,
 		AuthSignature: "",
 	}

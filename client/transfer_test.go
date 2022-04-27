@@ -22,6 +22,7 @@ func TestListTransfer(t *testing.T) {
 	for _, transfer := range response.Result {
 		assert.NotNil(t, transfer.Status)
 		assert.NotNil(t, transfer.Token.Data)
+		assert.NotNil(t, transfer.Token.Data.TokenID)
 	}
 }
 
